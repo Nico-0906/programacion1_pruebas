@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <stdio_ext.h>
 
@@ -32,13 +33,15 @@ void ordenarEmpleados(eEmpleado vec[], int tam);
 
 void inicializarEmpleado(eEmpleado vec[], int tam);
 
-void altaEmpleado(eEmpleado vec[], int tam);
+void altaEmpleado(int id, eEmpleado vec[], int tam);
 
 int buscarLibre(eEmpleado vec[], int tam);
 
 int buscarEmpleado(int id, eEmpleado vec[], int tam);
 
 void bajaEmpleado(eEmpleado vec[], int tam);
+
+void modificarEmpleado(eEmpleado vec[], int tam);
 
 int menu();
 
@@ -67,6 +70,7 @@ int main()
                 break;
             case 2:
                 printf("Modificar\n");
+                modificarEmpleado(lista, TAM);
                 break;
             case 3:
                 printf("Baja\n");
@@ -83,7 +87,7 @@ int main()
                 printf("Informes\n");
                 break;
             case 7:
-                printf("Confirma salida? s/n \n");
+                printf("\nConfirma salida? s/n \n");
                 __fpurge(stdin);
                 scanf("%c", &confirma);
                 if(confirma == 's'){
@@ -133,6 +137,8 @@ void mostrarEmpleado(eEmpleado emp){
 
 
 void mostrarEmpleados(eEmpleado lista[], int tam){
+
+    system("clear");
     printf("            ******* LISTADO DE EMPLEADOS *******\n");
     printf(" ID      Nombre    Sexo    Edad    Sueldo     Fecha ingreso\n\n");
 
@@ -198,7 +204,7 @@ void inicializarEmpleado(eEmpleado vec[], int tam){
 int menu(){
     int retorno;
     system("clear");
-    printf("\n***** GESTION DE EMPLEADOS *****\n");
+    printf("\n***** GESTION DE EMPLEADOS *****\n\n");
     printf("1- Alta empleado \n 2- Modificar empleado\n 3- Baja empleado\n 4- Ordenar empleados\n 5- Listar empleados\n 6- Informes\n 7- Salir\n Ingrese opcion:  ");
     __fpurge(stdin);
 
@@ -230,11 +236,11 @@ int buscarEmpleado(int id, eEmpleado vec[], int tam){
     return retorno;
 }
 
-void altaEmpleado(eEmpleado vec[], int tam){
+void altaEmpleado(int id, eEmpleado vec[], int tam){
 
     system("clear");
 
-    printf("****** ALTA EMPLEADO ******\n");
+    printf("****** ALTA EMPLEADO ******\n\n");
 
     int lugar;
     eEmpleado auxEmpleado;
@@ -243,7 +249,7 @@ void altaEmpleado(eEmpleado vec[], int tam){
 
     if(lugar == -1){
 
-    printf("No hay lugar sistema completo. \n");
+    printf("\nNo hay lugar sistema completo. \n\n");
 
     }else{
 
@@ -257,7 +263,7 @@ void altaEmpleado(eEmpleado vec[], int tam){
 
     if(busqueda != -1){
 
-        printf("Ya existe un empleado con ese ID. \n");
+        printf("\nYa existe un empleado con ese ID. \n\n");
 
     }else{
 
@@ -279,7 +285,7 @@ void altaEmpleado(eEmpleado vec[], int tam){
     printf("Ingrese fecha de ingreso: dd/mm/aaaa  \n");
     scanf("%d/%d/%d", &auxEmpleado.fechaIngreso.dia, &auxEmpleado.fechaIngreso.mes, &auxEmpleado.fechaIngreso.anio);
 
-    printf("Empleado agregado con exito.!");
+    printf("\nEmpleado agregado con exito.!");
 
     auxEmpleado.isEmpty = 0;
 
@@ -289,7 +295,6 @@ void altaEmpleado(eEmpleado vec[], int tam){
 
 }
 
-
 void bajaEmpleado(eEmpleado vec[], int tam){
 
     system("clear");
@@ -298,7 +303,7 @@ void bajaEmpleado(eEmpleado vec[], int tam){
     int busqueda;
     char confirmacion;
 
-    printf("***** BAJA DE EMPLEADO ***** \n");
+    printf("***** BAJA DE EMPLEADO ***** \n\n");
 
     printf("Ingrese ID de empleado: \n");
     scanf("%d", &auxId);
@@ -306,19 +311,127 @@ void bajaEmpleado(eEmpleado vec[], int tam){
     busqueda = buscarEmpleado(auxId, vec, tam);
 
     if(busqueda != -1){
-        //mostrarEmpleado(vec);
-        printf("Desea confirmar la baja? s/n\n");
+        mostrarEmpleado(vec[busqueda]);
+        printf("\nDesea confirmar la baja? s/n \n\n");
+        __fpurge(stdin);
         scanf("%c", &confirmacion);
 
         if(confirmacion == 's'){
-            vec.isEmpty = 1;
-            printf("Dado de baja con exito.! \n");
-        }else if(confirmacion == 'n'){
-            break;
+            vec[busqueda].isEmpty = 1;
+            printf("\nDado de baja con exito.! \n\n");
+        }else{
+            printf("\nOperacion cancelada. \n\n");
         }
     }else{
-        printf("Empleado no encontrado. \n");
-        break;
+        printf("\nEmpleado no encontrado. \n\n");
+    }
+}
+
+void modificarEmpleado(eEmpleado vec[], int tam){
+    system("clear");
+    int auxId;
+    int busqueda;
+    char confirmacion;
+    char auxChar;
+    float auxSueldo;
+    char auxNombre[20];
+    eFecha auxFecha;
+    int opcion;
+
+    printf("***** MODIFICAR EMPLEADO ***** \n\n");
+
+    printf("Ingrese ID de empleado: \n");
+    scanf("%d", &auxId);
+
+    busqueda = buscarEmpleado(auxId, vec, tam);
+
+    if(busqueda != -1){
+        mostrarEmpleado(vec[busqueda]);
+
+        printf("Que desea modificar: \n\n1- Nombre\n 2- Sexo\n 3- Edad \n 4- Sueldo \n 5- Fecha de ingreso\n 6- Cancelar \n\n");
+
+
+        scanf("%d", &opcion);
+
+    switch(opcion){
+        case 1:
+            printf("Ingrese nuevo nombre: \n");
+            __fpurge(stdin);
+            gets(auxNombre);
+
+            printf("\nDesea confirmar la modificacion? s/n \n\n");
+            __fpurge(stdin);
+            scanf("%c", &confirmacion);
+
+            if(confirmacion == 's'){
+                strcpy(vec[busqueda].nombre, auxNombre);
+                printf("\nModificado con exito.! \n\n");
+            }else{
+                printf("\nOperacion cancelada. \n\n");
+            }
+            break;
+        case 2:
+            printf("Ingrese nuevo sexo: \n");
+            scanf("%c", &auxChar);
+            printf("\nDesea confirmar la modificacion? s/n \n\n");
+            __fpurge(stdin);
+            scanf("%c", &confirmacion);
+
+            if(confirmacion == 's'){
+                vec[busqueda].sexo = auxChar;
+                printf("\nModificado con exito.! \n\n");
+            }else{
+                printf("\nOperacion cancelada. \n\n");
+            }
+            break;
+        case 3:
+            printf("Ingrese nueva edad: \n");
+            scanf("%d", &auxId);
+            printf("\nDesea confirmar la modificacion? s/n \n\n");
+            __fpurge(stdin);
+            scanf("%c", &confirmacion);
+
+            if(confirmacion == 's'){
+                vec[busqueda].edad = auxId;
+                printf("\nModificado con exito.! \n\n");
+            }else{
+                printf("\nOperacion cancelada. \n\n");
+            }
+            break;
+        case 4:
+            printf("Ingrese nuevo sueldo: \n");
+            scanf("%f", &auxSueldo);
+            printf("\nDesea confirmar la modificacion? s/n \n\n");
+            __fpurge(stdin);
+            scanf("%c", &confirmacion);
+
+            if(confirmacion == 's'){
+                vec[busqueda].sueldo = auxSueldo;
+                printf("\nModificado con exito.! \n\n");
+            }else{
+                printf("\nOperacion cancelada. \n\n");
+            }
+            break;
+        case 5:
+            printf("Ingrese nueva fecha de ingreso: dd/mm/aaaa \n");
+            scanf("%d/%d/%d", &auxFecha.dia, &auxFecha.mes, &auxFecha.anio);
+            printf("\nDesea confirmar la modificacion? s/n \n\n");
+            __fpurge(stdin);
+            scanf("%c", &confirmacion);
+
+            if(confirmacion == 's'){
+                vec[busqueda].fechaIngreso = auxFecha;
+                printf("\nModificado con exito.! \n\n");
+            }else{
+                printf("\nOperacion cancelada. \n\n");
+            }
+            break;
+        default:
+            break;
+    }
+
+    }else{
+        printf("\nEmpleado no encontrado. \n\n");
     }
 }
 
