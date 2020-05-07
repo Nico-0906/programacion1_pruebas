@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1588868598 source:/home/nico/Desktop/clase10/main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdio_ext.h>
+

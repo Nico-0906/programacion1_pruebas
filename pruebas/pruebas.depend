@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1588170352 source:/home/nico/Desktop/pruebas/utn.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
+1588389714 source:/home/nico/Desktop/pruebas/main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	<stdio_ext.h>
+	"utn.h"
+	"empleados.h"
+
+1588171182 /home/nico/Desktop/pruebas/utn.h
+
+1588162473 source:/home/nico/Desktop/pruebas/empleados.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	"utn.h"
+
+1588162368 /home/nico/Desktop/pruebas/empleados.h
+

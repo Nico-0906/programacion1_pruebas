@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1588707102 source:/home/nico/Desktop/clase9/main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdio_ext.h>
+	"clas9.h"
+
+1588707092 source:/home/nico/Desktop/clase9/clase9.c
+	<stdlib.h>
+	<stdio.h>
+	<stdio_ext.h>
+	"clas9.h"
+
+1588706892 /home/nico/Desktop/clase9/clas9.h
+
