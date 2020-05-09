@@ -33,7 +33,7 @@ void ordenarEmpleados(eEmpleado vec[], int tam);
 
 void inicializarEmpleado(eEmpleado vec[], int tam);
 
-void altaEmpleado(int id, eEmpleado vec[], int tam);
+int altaEmpleado(int idx, eEmpleado vec[], int tam);
 
 int buscarLibre(eEmpleado vec[], int tam);
 
@@ -49,6 +49,7 @@ int main()
 {
     char seguir = 's';
     char confirma;
+    int proximoId = 1000;
 
     eEmpleado lista[TAM]; /* = {
                             {1234, "Nicolas", 'm', 27, 35000.60, {9, 7, 2010}},
@@ -66,7 +67,9 @@ int main()
         {
             case 1:
                 printf("Alta\n");
-                altaEmpleado(lista, TAM);
+                if(altaEmpleado(proximoId, lista, TAM)){
+                    proximoId++;
+                }
                 break;
             case 2:
                 printf("Modificar\n");
@@ -236,7 +239,8 @@ int buscarEmpleado(int id, eEmpleado vec[], int tam){
     return retorno;
 }
 
-void altaEmpleado(int id, eEmpleado vec[], int tam){
+int altaEmpleado(int idx, eEmpleado vec[], int tam){
+    int retorno = 0;
 
     system("clear");
 
@@ -253,21 +257,8 @@ void altaEmpleado(int id, eEmpleado vec[], int tam){
 
     }else{
 
-    int busqueda;
-    int auxId;
 
-    printf("Ingrese ID: \n");
-    scanf("%d", &auxId);
-
-    busqueda = buscarEmpleado(auxId, vec, tam);
-
-    if(busqueda != -1){
-
-        printf("\nYa existe un empleado con ese ID. \n\n");
-
-    }else{
-
-    auxEmpleado.id = auxId;
+    auxEmpleado.id = idx;
 
     printf("Ingrese nombre: \n");
     __fpurge(stdin);
@@ -290,9 +281,11 @@ void altaEmpleado(int id, eEmpleado vec[], int tam){
     auxEmpleado.isEmpty = 0;
 
     vec[lugar] = auxEmpleado;
-    }
+
+    retorno = 1;
     }
 
+    return retorno;
 }
 
 void bajaEmpleado(eEmpleado vec[], int tam){
