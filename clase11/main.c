@@ -7,6 +7,7 @@
 #include <stdio_ext.h>
 
 #define TAM 10
+#define TAMSECTOR 5
 #define CANTHARDCODE 9
 
 typedef struct{
@@ -23,8 +24,15 @@ typedef struct{
     float sueldo;            //campos de una estructura
     eFecha fechaIngreso;
     int isEmpty; //0 tiene datos y 1 es vacio
+    int idSector;
 
 }eEmpleado;
+
+typedef struct{
+    int id;
+    char descripcion[20];
+
+}eSector;
 
 int compararFechas(eFecha fecha1, eFecha fecha2);
 
@@ -70,6 +78,7 @@ int main()
     int proximoId = 1000;
 
     eEmpleado lista[TAM];
+    eSector sectores[TAMSECTOR] = {{1, "Sistemas"},{2, "RRHH"},{3, "Compras"},{4, "Ventas"},{5, "Contable"}};
 
 
     inicializarEmpleado(lista, TAM);
@@ -126,14 +135,14 @@ int main()
 }
 
 void mostrarEmpleado(eEmpleado emp){
-    printf("%4d   %10s    %c      %2d    %5.2f     %02d/%02d/%4d \n", emp.id, emp.nombre, emp.sexo, emp.edad, emp.sueldo, emp.fechaIngreso.dia, emp.fechaIngreso.mes, emp.fechaIngreso.anio);
+    printf("%4d   %10s    %c      %2d    %5.2f     %02d/%02d/%4d      %10s \n", emp.id, emp.nombre, emp.sexo, emp.edad, emp.sueldo, emp.fechaIngreso.dia, emp.fechaIngreso.mes, emp.fechaIngreso.anio, emp.idSector);
 }
 
 void mostrarEmpleados(eEmpleado lista[], int tam){
 
     system("clear");
     printf("            ******* LISTADO DE EMPLEADOS *******\n");
-    printf(" ID      Nombre    Sexo    Edad    Sueldo     Fecha ingreso\n\n");
+    printf(" ID      Nombre    Sexo    Edad    Sueldo     Fecha ingreso     Sector \n\n");
 
     int flag = 0;
     for(int i = 0 ; i < tam ; i++){
@@ -432,6 +441,7 @@ void hardcodearEmpleados(eEmpleado vec[], int cantidadEmpleados){
         vec[i].fechaIngreso.mes = meses[i];
         vec[i].fechaIngreso.anio = anios[i];
         vec[i].isEmpty = 0;
+        vec[i].idSector = idsSector[i];
 
     }
 }
@@ -444,7 +454,7 @@ char menuInforme(){
 
     printf("***** INFORME EMPLEADOS ***** \n");
 
-    printf("A- Listar empleados por año \n B- Listar empleadas \n C- Informe C: \n D- Informe D: \n E- Informe E:\n F- SALIR \n \n ");
+    printf("A- Listar empleados por año \n B- Listar empleadas \n C- Total de sueldos \n D- Informe D: \n E- Informe E:\n F- SALIR \n \n ");
 
     __fpurge(stdin);
     scanf("%c", &retorno);
@@ -466,7 +476,7 @@ void informesEmpleados(eEmpleado vec[], int tam){
                 listarEmpleadas(vec, tam);
                 break;
             case 'c':
-                printf("Baja\n");
+                informarTotalSueldos(vec, tam);
                 break;
             case 'd':
                 printf("Ordenar\n");
@@ -543,6 +553,16 @@ void listarEmpleadas(eEmpleado vec[], int tam){
 }
 
 void informarTotalSueldos(eEmpleado vec[], int tam){
+    float acumulador = 0;
+    system("clear");
 
+    for(int i = 0; i < tam; i++){
+        if(vec[i].isEmpty == 0){
+            acumulador += vec[i].sueldo;
+        }
+    }
+
+    printf("***** TOTAL DE SUELDOS *****\n\n");
+    printf("El total de los sueldos acumulados es $ %.2f", acumulador);
 
 }
