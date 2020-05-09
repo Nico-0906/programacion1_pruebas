@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1589035702 source:/home/nico/Desktop/clase11/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"dataWerehouse.h"
+	<stdio_ext.h>
+
+1588982483 /home/nico/Desktop/clase11/dataWerehouse.h
+
