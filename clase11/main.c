@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio_ext.h>
 
 #include "dataWerehouse.h"
 
-#include <stdio_ext.h>
 
 #define TAM 10
-#define TAMSECTOR 5
+#define TAMSEC 5
 #define CANTHARDCODE 9
 
 typedef struct{
@@ -38,9 +38,9 @@ int compararFechas(eFecha fecha1, eFecha fecha2);
 
 void hardcodearEmpleados(eEmpleado vec[], int cantidadEmpleados);
 
-void mostrarEmpleado(eEmpleado emp);
+void mostrarEmpleado(eEmpleado emp, eSector sectores[], int tamsec);
 
-void mostrarEmpleados(eEmpleado lista[], int tam);
+void mostrarEmpleados(eEmpleado lista[], int tam, eSector sectores[], int tamsec);
 
 void ordenarEmpleados(eEmpleado vec[], int tam);
 
@@ -52,21 +52,23 @@ int buscarLibre(eEmpleado vec[], int tam);
 
 int buscarEmpleado(int id, eEmpleado vec[], int tam);
 
-void bajaEmpleado(eEmpleado vec[], int tam);
+void bajaEmpleado(eEmpleado vec[], int tam, eSector sectores[], int tamsec);
 
-void modificarEmpleado(eEmpleado vec[], int tam);
+void modificarEmpleado(eEmpleado vec[], int tam, eSector sectores[], int tamsec);
 
 int menu();
+
+int cargarDescripcionSector(char descripcion[], int id, eSector sectores[], int tamsec);
 
 // INFORMES
 
 char menuInforme();
 
-void informesEmpleados(eEmpleado vec[], int tam);
+void informesEmpleados(eEmpleado vec[], int tam, eSector sectores[], int tamsec);
 
-void listarEmpleadosXAnio(eEmpleado vec[], int tam);
+void listarEmpleadosXAnio(eEmpleado vec[], int tam, eSector sectores[], int tamsec);
 
-void listarEmpleadas(eEmpleado vec[], int tam);
+void listarEmpleadas(eEmpleado vec[], int tam, eSector sectores[], int tamsec);
 
 void informarTotalSueldos(eEmpleado vec[], int tam);
 
@@ -78,7 +80,7 @@ int main()
     int proximoId = 1000;
 
     eEmpleado lista[TAM];
-    eSector sectores[TAMSECTOR] = {{1, "Sistemas"},{2, "RRHH"},{3, "Compras"},{4, "Ventas"},{5, "Contable"}};
+    eSector sectores[TAMSEC] = {{1, "Sistemas"},{2, "RRHH"},{3, "Compras"},{4, "Ventas"},{5, "Contable"}};
 
 
     inicializarEmpleado(lista, TAM);
@@ -99,22 +101,22 @@ int main()
                 break;
             case 2:
                 printf("Modificar\n");
-                modificarEmpleado(lista, TAM);
+                modificarEmpleado(lista, TAM, sectores, TAMSEC);
                 break;
             case 3:
                 printf("Baja\n");
-                bajaEmpleado(lista, TAM);
+                bajaEmpleado(lista, TAM, sectores, TAMSEC);
                 break;
             case 4:
                 printf("Ordenar\n");
                 break;
             case 5:
                 printf("Listar\n");
-                mostrarEmpleados(lista, TAM);
+                mostrarEmpleados(lista, TAM, sectores, TAMSEC);
                 break;
             case 6:
                 printf("Informes\n");
-                informesEmpleados(lista, TAM);
+                informesEmpleados(lista, TAM, sectores, TAMSEC);
                 break;
             case 7:
                 printf("\nConfirma salida? s/n \n");
@@ -134,20 +136,24 @@ int main()
     return 0;
 }
 
-void mostrarEmpleado(eEmpleado emp){
-    printf("%4d   %10s    %c      %2d    %5.2f     %02d/%02d/%4d      %10s \n", emp.id, emp.nombre, emp.sexo, emp.edad, emp.sueldo, emp.fechaIngreso.dia, emp.fechaIngreso.mes, emp.fechaIngreso.anio, emp.idSector);
+void mostrarEmpleado(eEmpleado emp, eSector sectores[], int tamsec){
+    char descripcion[20];
+
+    cargarDescripcionSector(descripcion , emp.idSector, sectores, tamsec);
+
+    printf("%4d   %10s    %c      %2d    %10.2f     %02d/%02d/%4d       %10s \n", emp.id, emp.nombre, emp.sexo, emp.edad, emp.sueldo, emp.fechaIngreso.dia, emp.fechaIngreso.mes, emp.fechaIngreso.anio, descripcion);
 }
 
-void mostrarEmpleados(eEmpleado lista[], int tam){
+void mostrarEmpleados(eEmpleado lista[], int tam, eSector sectores[], int tamsec){
 
     system("clear");
     printf("            ******* LISTADO DE EMPLEADOS *******\n");
-    printf(" ID      Nombre    Sexo    Edad    Sueldo     Fecha ingreso     Sector \n\n");
+    printf(" ID      Nombre    Sexo    Edad    Sueldo     Fecha ingreso          Sector \n\n");
 
     int flag = 0;
     for(int i = 0 ; i < tam ; i++){
         if(lista[i].isEmpty == 0){
-            mostrarEmpleado(lista[i]);
+            mostrarEmpleado(lista[i], sectores, tamsec);
             flag = 1;
         }
     }
@@ -287,7 +293,7 @@ int altaEmpleado(int idx, eEmpleado vec[], int tam){
     return retorno;
 }
 
-void bajaEmpleado(eEmpleado vec[], int tam){
+void bajaEmpleado(eEmpleado vec[], int tam, eSector sectores[], int tamsec){
 
     system("clear");
 
@@ -303,7 +309,7 @@ void bajaEmpleado(eEmpleado vec[], int tam){
     busqueda = buscarEmpleado(auxId, vec, tam);
 
     if(busqueda != -1){
-        mostrarEmpleado(vec[busqueda]);
+        mostrarEmpleado(vec[busqueda], sectores, tamsec);
         printf("\nDesea confirmar la baja? s/n \n\n");
         __fpurge(stdin);
         scanf("%c", &confirmacion);
@@ -319,7 +325,7 @@ void bajaEmpleado(eEmpleado vec[], int tam){
     }
 }
 
-void modificarEmpleado(eEmpleado vec[], int tam){
+void modificarEmpleado(eEmpleado vec[], int tam, eSector sectores[], int tamsec){
     system("clear");
     int auxId;
     int busqueda;
@@ -338,7 +344,7 @@ void modificarEmpleado(eEmpleado vec[], int tam){
     busqueda = buscarEmpleado(auxId, vec, tam);
 
     if(busqueda != -1){
-        mostrarEmpleado(vec[busqueda]);
+        mostrarEmpleado(vec[busqueda], sectores, tamsec);
 
         printf("Que desea modificar: \n\n1- Nombre\n 2- Sexo\n 3- Edad \n 4- Sueldo \n 5- Fecha de ingreso\n 6- Cancelar \n\n");
 
@@ -462,7 +468,7 @@ char menuInforme(){
     return retorno;
 }
 
-void informesEmpleados(eEmpleado vec[], int tam){
+void informesEmpleados(eEmpleado vec[], int tam, eSector sectores[], int tamsec){
 
     char seguir = 's';
     char confirma;
@@ -470,10 +476,10 @@ void informesEmpleados(eEmpleado vec[], int tam){
         switch(menuInforme())
         {
             case 'a':
-                listarEmpleadosXAnio(vec, tam);
+                listarEmpleadosXAnio(vec, tam, sectores, tamsec);
                 break;
             case 'b':
-                listarEmpleadas(vec, tam);
+                listarEmpleadas(vec, tam, sectores, tamsec);
                 break;
             case 'c':
                 informarTotalSueldos(vec, tam);
@@ -501,7 +507,7 @@ void informesEmpleados(eEmpleado vec[], int tam){
 
 }
 
-void listarEmpleadosXAnio(eEmpleado vec[], int tam){
+void listarEmpleadosXAnio(eEmpleado vec[], int tam, eSector sectores[], int tamsec){
     int flag = 0;
     int anio;
 
@@ -516,7 +522,7 @@ void listarEmpleadosXAnio(eEmpleado vec[], int tam){
     for(int i = 0; i < tam; i++){
         if(vec[i].fechaIngreso.anio == anio && vec[i].isEmpty == 0){
 
-            mostrarEmpleado(vec[i]);
+            mostrarEmpleado(vec[i], sectores, tamsec);
             flag = 1;
         }
     }
@@ -529,7 +535,7 @@ void listarEmpleadosXAnio(eEmpleado vec[], int tam){
 
 }
 
-void listarEmpleadas(eEmpleado vec[], int tam){
+void listarEmpleadas(eEmpleado vec[], int tam, eSector sectores[], int tamsec){
     int flag = 0;
 
     system("clear");
@@ -539,7 +545,7 @@ void listarEmpleadas(eEmpleado vec[], int tam){
 
     for(int i = 0; i < tam; i++){
         if(vec[i].sexo == 'f' && vec[i].isEmpty == 0){
-            mostrarEmpleado(vec[i]);
+            mostrarEmpleado(vec[i], sectores, tamsec);
             flag = 1;
         }
     }
@@ -564,5 +570,17 @@ void informarTotalSueldos(eEmpleado vec[], int tam){
 
     printf("***** TOTAL DE SUELDOS *****\n\n");
     printf("El total de los sueldos acumulados es $ %.2f", acumulador);
+
+}
+
+int cargarDescripcionSector(char descripcion[], int id, eSector sectores[], int tamsec){
+    int retorno = 0;
+    for(int i = 0 ; i < tamsec ; i++){
+        if(sectores[i].id == id){
+            strcpy(descripcion, sectores[i].descripcion);
+            retorno = 1;
+        }
+    }
+    return retorno;
 
 }
