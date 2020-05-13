@@ -1,0 +1,42 @@
+# depslib dependency file v1.0
+1589240362 source:/home/nico/Desktop/progra/programacion1_pruebas/clase12/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio_ext.h>
+	"empleado.h"
+	"sector.h"
+	"infoEmpleado.h"
+
+1589065835 /home/nico/Desktop/progra/programacion1_pruebas/clase12/dataWerehouse.h
+
+1589243197 source:/home/nico/Desktop/progra/programacion1_pruebas/clase12/sector.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio_ext.h>
+	"sector.h"
+
+1589240298 /home/nico/Desktop/progra/programacion1_pruebas/clase12/empleado.h
+	"sector.h"
+
+1589238999 /home/nico/Desktop/progra/programacion1_pruebas/clase12/sector.h
+
+1589387658 source:/home/nico/Desktop/progra/programacion1_pruebas/clase12/empleado.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio_ext.h>
+	"empleado.h"
+	"dataWerehouse.h"
+
+1589240362 source:/home/nico/Desktop/progra/programacion1_pruebas/clase12/infoEmpleado.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdio_ext.h>
+	"empleado.h"
+	"infoEmpleado.h"
+
+1589391204 /home/nico/Desktop/progra/programacion1_pruebas/clase12/infoEmpleado.h
+
