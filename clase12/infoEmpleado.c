@@ -362,13 +362,19 @@ void informarSectorCostoso(eEmpleado vec[], int tam, eSector sectores[], int tam
 }
 
 void informeTotalSueldosSector(eEmpleado vec[], int tam, eSector sectores[], int tamsec){
+    int idSector;
+    float total;
+    char nombreSector[20];
     system("clear");
-    printf("-------------------------------------------\n\n");
-    printf("El informe total de sueldos por sector es: \n");
 
-    for(int i = 0 ; i < tamsec ; i++){
-        printf("Sector %s = $ %.2f\n", sectores[i].descripcion, obtenerTotalSueldosSector(sectores[i].id, vec, tam));
-    }
+    listarSectores(sectores, tamsec);
+    printf("Ingrese sector: ");
+    scanf("%d", &idSector);
+
+    total = obtenerTotalSueldosSector(idSector, vec, tam);
+    cargarDescripcionSector(nombreSector, idSector, sectores, tamsec);
+
+    printf("El informe total de sueldos del sector %s es $%.2f \n", nombreSector, total);
 
 }
 
@@ -379,11 +385,12 @@ void informeCantEmpleadosSector(eEmpleado vec[], int tam, eSector sectores[], in
 
     for(int i = 0 ; i < tamsec ; i++){
         for(int s = 0; s < tam ; s++){
-            if(vec[s].idSector == sectores[i].id && vec[s].isEmpty){
+            if(vec[s].idSector == sectores[i].id && vec[s].isEmpty == 0){
                 cantEmp++;
             }
         }
-        printf("En el sector %s hay %d empleados.", sectores[i].descripcion, cantEmp);
+        printf("En el sector %s hay %d empleados.\n", sectores[i].descripcion, cantEmp);
+        cantEmp = 0;
     }
 
 }
@@ -417,7 +424,7 @@ void informeEmpleadoMasJovenSector(eEmpleado vec[], int tam, eSector sectores[],
 
     if(flag){
 
-        printf("***** Los empleados mas jovenes del sector son *****\n\n");
+        printf("***** Los empleados mas jovenes del sector tienen %d anios y son *****\n\n", menorEdad);
         printf("\n ID      Nombre    Sexo    Edad    Sueldo     Fecha ingreso          Sector\n\n");
         for(int i = 0; i < tam; i++){
             if(vec[i].edad == menorEdad  && vec[i].isEmpty == 0){

@@ -81,7 +81,6 @@ void inicializarEmpleado(eEmpleado vec[], int tam){
      }
 }
 
-
 int buscarLibre(eEmpleado vec[], int tam){
     int posicion = -1;
         for(int i = 0 ; i < tam ; i++){
@@ -122,7 +121,6 @@ int altaEmpleado(int idx, eEmpleado vec[], int tam, eSector sectores[], int tams
     printf("\nNo hay lugar sistema completo. \n\n");
 
     }else{
-
 
     auxEmpleado.id = idx;
 
@@ -332,10 +330,31 @@ int menu(){
     int retorno;
     system("clear");
     printf("\n***** GESTION DE EMPLEADOS *****\n\n");
-    printf("1- Alta empleado \n 2- Modificar empleado\n 3- Baja empleado\n 4- Ordenar empleados\n 5- Listar empleados\n 6- Informes\n 7- Salir\n Ingrese opcion:  ");
+    printf("1- Alta empleado \n ");
+    printf("2- Modificar empleado\n ");
+    printf("3- Baja empleado\n ");
+    printf("4- Ordenar empleados\n ");
+    printf("5- Listar empleados\n ");
+    printf("6- Informes\n ");
+    printf("7- Mostrar almuerzos\n ");
+    printf("8- Alta almuerzo\n ");
+    printf("9- Nada\n ");
+    printf("10- Salir\n ");
+    printf("Ingrese opcion:  ");
     __fpurge(stdin);
 
     scanf("%d", &retorno);
 
+    return retorno;
+}
+
+int cargarNombreEmpleado(char nombre[], int id, eEmpleado empleado[], int tam){
+    int retorno = 0;
+    for(int i = 0; i < tam; i++){
+        if(empleado[i].id == id){
+            strcpy(nombre, empleado[i].nombre);
+            retorno = 1;
+        }
+    }
     return retorno;
 }

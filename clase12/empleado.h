@@ -48,3 +48,5 @@ void modificarEmpleado(eEmpleado vec[], int tam, eSector sectores[], int tamsec)
 int cargarDescripcionSector(char descripcion[], int id, eSector sectores[], int tamsec);
 
 int menu();
+
+int cargarNombreEmpleado(char nombre[], int id, eEmpleado empleado[], int tam);
