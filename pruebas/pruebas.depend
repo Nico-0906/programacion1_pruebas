@@ -25,3 +25,29 @@
 
 1588162368 /home/nico/Desktop/pruebas/empleados.h
 
+1588162473 source:/home/nico/Desktop/progra/programacion1_pruebas/pruebas/empleados.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	"utn.h"
+
+1588171182 /home/nico/Desktop/progra/programacion1_pruebas/pruebas/utn.h
+
+1588651325 source:/home/nico/Desktop/progra/programacion1_pruebas/pruebas/main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	<stdio_ext.h>
+	"utn.h"
+	"empleados.h"
+
+1588439213 /home/nico/Desktop/progra/programacion1_pruebas/pruebas/empleados.h
+
+1588170352 source:/home/nico/Desktop/progra/programacion1_pruebas/pruebas/utn.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+

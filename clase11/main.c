@@ -60,8 +60,6 @@ int menu();
 
 int cargarDescripcionSector(char descripcion[], int id, eSector sectores[], int tamsec);
 
-// INFORMES
-
 char menuInforme();
 
 void informesEmpleados(eEmpleado vec[], int tam, eSector sectores[], int tamsec);
@@ -432,8 +430,6 @@ void modificarEmpleado(eEmpleado vec[], int tam, eSector sectores[], int tamsec)
         printf("\nEmpleado no encontrado. \n\n");
     }
 }
-
-//      1627680EXCGXL81901
 
 void hardcodearEmpleados(eEmpleado vec[], int cantidadEmpleados){
 

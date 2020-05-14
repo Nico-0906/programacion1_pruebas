@@ -134,10 +134,10 @@ int main()
 
     return 0;
 }
+
 void mostrarEmpleado(eEmpleado emp){
     printf("%4d   %10s    %c      %2d    %5.2f     %02d/%02d/%4d \n", emp.id, emp.nombre, emp.sexo, emp.edad, emp.sueldo, emp.fechaIngreso.dia, emp.fechaIngreso.mes, emp.fechaIngreso.anio);
 }
-
 
 void mostrarEmpleados(eEmpleado lista[], int tam){
 
@@ -427,6 +427,4 @@ void modificarEmpleado(eEmpleado vec[], int tam){
         printf("\nEmpleado no encontrado. \n\n");
     }
 }
-
-//      1627680EXCGXL81901
 
