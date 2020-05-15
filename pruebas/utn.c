@@ -48,7 +48,6 @@ void getStr(char cadena[], int tam){    //falta desarrollar o probar
             cadena[i] = '\0';
         }
     }
-
 }
 
 float calcularPromedio(int vec[], int tam){
